@@ -1,7 +1,9 @@
 # eindist
 Differentiable einops-style wrapper over torch.distributed. 
 
-## example usage
+## Install
+    pip install git+https://github.com/DanielHesslow/eindist
+## Example Usage
 
 ```python
     TP = Distributed(None) # None is default process group. Distribute across everyone
