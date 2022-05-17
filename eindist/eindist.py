@@ -1,7 +1,7 @@
 import torch.distributed as dist
 import torch
 
-from parsing import ParsedExpression
+from eindist.parsing import ParsedExpression
 from einops import rearrange
 import warnings
 
@@ -68,22 +68,6 @@ def _reduce(input_, pg):
     input_ = input_.clone() #for simplicity for now.
     torch.distributed.all_reduce(input_, group=pg.pg)
     return input_
-
-def equal_parsed(pa, pb):
-    if len(pa.composition) != len(pb.composition):
-        return False
-    
-    print(pa.composition == pb.composition, pa, pb)
-    
-    for ca, cb in zip(pa.composition, pb.composition):
-        print(ca == cb, ca, cb)
-        if len(ca) != len (cb):
-            return False
-        for ax_a, ax_b in zip(ca, cb):
-            if ax_a != ax_b:
-                return False
-            
-    return True
 
 def distribute_(pattern, tensor, dry = False, **kwargs):
     left_str, right_str = pattern.split("->")
